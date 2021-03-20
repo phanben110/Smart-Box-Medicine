@@ -1,3 +1,7 @@
+//copyright
+//name: BenPhan
+//email: phanben110@gmail.com
+
 #define showDebug false
 #include<string.h>
 
