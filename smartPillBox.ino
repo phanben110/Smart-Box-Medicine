@@ -15,9 +15,9 @@ TMRpcm tmrpcm;   // create an object for use in this sketch-- module khuếch đ
 #define led7seg1 48 //Chân điều khiển led7--1
 #define led7seg2 38 //Chân điều khiển led7--2
 
-#define button1 45  //Chân nhận tín hiệu nút Trừ
-#define button2 43  //Chân nhận tín hiệu nút Cộng
-#define button3 47  //Chân nhận tín hiệu nút Cài đặt
+#define button1 47  //Chân nhận tín hiệu nút Trừ    47
+#define button2 45  //Chân nhận tín hiệu nút Cộng   45
+#define button3 43  //Chân nhận tín hiệu nút Cài đặt 43
 #define button4 49  //Chân nhận tín hiệu nút preview
 
 //Chân nhận tín hiệu mở nắp ngăn 1-->7
@@ -183,8 +183,8 @@ void suDung(int*);
 //-------------------------
 //--------------------------------------------
 void loop() { 
-  if(digitalRead(button2)){
-    while(digitalRead(button2)){}
+  if(digitalRead(button3)){
+    while(digitalRead(button3)){}
     dangCaiDat = 1;
   }
   while(dangCaiDat){
@@ -536,55 +536,55 @@ void caiDatBaBuoi(int soNganThuoc){
 //-------------------------
 void caiDat(int *cd){
   
-//  if (nhanDienMoNap() == 0 && digitalRead(button3) ){
-//    while(digitalRead(button3)){};
-//    *cd = 0;
-//  }
-//  else if (nhanDienMoNap() == 0 && !digitalRead(button3)){
-//         turnOnAllLed();
-//         digitalWrite(led7seg1, HIGH);
-//         digitalWrite(led7seg2, HIGH);
-//       }
-//       else switch(nhanDienMoNap()){
-//              case 1: turnOffAllLed();
-//                      digitalWrite(led_1, HIGH);
-//                      caiDatBaBuoi(1);
-//                      sendData(1);
-//              break;
-//              case 2: turnOffAllLed();
-//                      digitalWrite(led_2, HIGH);
-//                      caiDatBaBuoi(2);
-//                      sendData(2);
-//              break;
-//              case 3: turnOffAllLed();
-//                      digitalWrite(led_3, HIGH);
-//                      caiDatBaBuoi(3);
-//                      sendData(3);
-//              break;
-//              case 4: turnOffAllLed();
-//                      digitalWrite(led_4, HIGH);
-//                      caiDatBaBuoi(4);
-//                      sendData(4);
-//              break;
-//              case 5: turnOffAllLed();
-//                      digitalWrite(led_5, HIGH);
-//                      caiDatBaBuoi(5);
-//                      sendData(5);
-//              break;
-//              case 6: turnOffAllLed();
-//                      digitalWrite(led_6, HIGH);
-//                      caiDatBaBuoi(6);
-//                      sendData(6);
-//              break;
-//              case 7: turnOffAllLed();
-//                      digitalWrite(led_7, HIGH);
-//                      caiDatBaBuoi(7);
-//                      sendData(7);
-//              break;
-//              default: 
-//              break;
-//            }
-    turnOnAllLed();
+  if (nhanDienMoNap() == 0 && digitalRead(button3) ){
+    while(digitalRead(button3)){};
+    *cd = 0;
+  }
+  else if (nhanDienMoNap() == 0 && !digitalRead(button3)){
+         turnOnAllLed();
+         digitalWrite(led7seg1, HIGH);
+         digitalWrite(led7seg2, HIGH);
+       }
+       else switch(nhanDienMoNap()){
+              case 1: turnOffAllLed();
+                      digitalWrite(led_1, HIGH);
+                      caiDatBaBuoi(1);
+                      sendData(1);
+              break;
+              case 2: turnOffAllLed();
+                      digitalWrite(led_2, HIGH);
+                      caiDatBaBuoi(2);
+                      sendData(2);
+              break;
+              case 3: turnOffAllLed();
+                      digitalWrite(led_3, HIGH);
+                      caiDatBaBuoi(3);
+                      sendData(3);
+              break;
+              case 4: turnOffAllLed();
+                      digitalWrite(led_4, HIGH);
+                      caiDatBaBuoi(4);
+                      sendData(4);
+              break;
+              case 5: turnOffAllLed();
+                      digitalWrite(led_5, HIGH);
+                      caiDatBaBuoi(5);
+                      sendData(5);
+              break;
+              case 6: turnOffAllLed();
+                      digitalWrite(led_6, HIGH);
+                      caiDatBaBuoi(6);
+                      sendData(6);
+              break;
+              case 7: turnOffAllLed();
+                      digitalWrite(led_7, HIGH);
+                      caiDatBaBuoi(7);
+                      sendData(7);
+              break;
+              default: 
+              break;
+            }
+   
 }
 //-------------------------
 void hienThiSoLuong(int soNganThuoc, int buoi){
@@ -597,12 +597,27 @@ int checkTime(){
   String realTime = rtc.getTimeStr();
   if (realTime[0] == clockTime_sang[0] && realTime[1] == clockTime_sang[1] && realTime[3] == clockTime_sang[2] && realTime[4] == clockTime_sang[3]){
     sesson = 1;
+    for(int i=1; i<=7; i++){
+        if(box[i][1] > 0){
+          daLayThuoc[i] = 0;
+        }
+    }
   }
   else if (realTime[0] == clockTime_trua[0] && realTime[1] == clockTime_trua[1] && realTime[3] == clockTime_trua[2] && realTime[4] == clockTime_trua[3]){
           sesson = 2;
+          for(int i=1; i<=7; i++){
+            if(box[i][2] > 0){
+              daLayThuoc[i] = 0;
+            }
+          }
        }
        else if (realTime[0] == clockTime_toi[0] && realTime[1] == clockTime_toi[1] && realTime[3] == clockTime_toi[2] && realTime[4] == clockTime_toi[3]){
                sesson = 3;
+               for(int i=1; i<=7; i++){
+                  if(box[i][3] > 0){
+                    daLayThuoc[i] = 0;
+                  }
+               }
             }
             else sesson = 0;
   return sesson;
@@ -627,12 +642,24 @@ void loaBaoSoLuong(int cases){
     case 10: tmrpcm.play ("onePill.wav") ;
              delay (1200) ;
     break;
+    case 15: tmrpcm.play ("oneAndHalfPill.wav") ;
+             delay (1200) ;
+    break;
     case 20: tmrpcm.play ("twoPill.wav") ;
              delay (1200) ;
     break;
     case 30: tmrpcm.play ("threePill.wav") ;
              delay (1200) ;
-    break;    
+    break;
+    case 40: tmrpcm.play ("fourPill.wav") ;
+             delay (1200) ;
+    break; 
+    case 50: tmrpcm.play ("fivePill.wav") ;
+             delay (1200) ;
+    break;  
+    case 60: tmrpcm.play ("sixPill.wav") ;
+             delay (1200) ;
+    break;  
   }
 }
 //-------------------------
@@ -692,26 +719,18 @@ bool chuaLayHetThuoc(){
 //-------------------------
 void suDung(int *cd){
   int tg = checkTime();
-  
-  if(tg != 0){            // Nếu đến giờ uống thuốc 1:sáng, 2:trưa, 3:tối
-    for(int i=1; i<=7; i++){
-        if(box[i][tg] > 0){
-          daLayThuoc[i] = 0;
-        }
-    }
-    unsigned long time1 = millis();
-    while(checkSignal() == 0 && millis()-time1 < 40000 && chuaLayHetThuoc()){              // Báo trong 3 phút, nếu không có nắp nào mở
-      for(int i=1; i <= 7; i++){
+  unsigned long time1 = millis();
+  while(checkSignal() == 0 && millis()-time1 < 60000 && chuaLayHetThuoc()){              // Báo trong 3 phút, nếu không có nắp nào mở
+    for(int i=1; i <= 7; i++){
         if(box[i][tg] > 0 && daLayThuoc[i] == 0){
           batLed(i);
         }
         else tatLed(i);
-      }
-      tmrpcm.play ("ring.wav");
-      delay (1000) ;
     }
-    turnOffAllLed();
+    tmrpcm.play ("ring.wav");
+    delay (1000) ;
   }
+  turnOffAllLed();
   while(chuaLayHetThuoc()){
     for(int i=1; i<=7; i++){                    // bật Led các ngăn chưa lấy thuốc
       if(box[i][tg] > 0 && daLayThuoc[i] == 0){
@@ -720,15 +739,15 @@ void suDung(int *cd){
       else tatLed(i);
     }    
     int openedCase = checkSignal();
-    if(openedCase != 0 && box[openedCase][tg] > 0 && daLayThuoc[openedCase] == 0){  //nếu mở nắp 1 trong 7 ngăn
+    if(openedCase != 0 && box[openedCase][tg] > 0 && daLayThuoc[openedCase] == 0){  //nếu mở nắp 1 trong các ngăn cần lấy thuốc
       turnOffAllLed();
       batLed(openedCase);  // sáng đèn ngăn đó
       searchAndShow();      // loa và hiển thi số lượng đến khi đóng nắp
       daLayThuoc[openedCase] = 1;
     }
   }
-  if(digitalRead(button2)){
-    while(digitalRead(button2)){};
+  if(digitalRead(button3)){
+    while(digitalRead(button3)){};
     *cd = 1;
   }
 }
